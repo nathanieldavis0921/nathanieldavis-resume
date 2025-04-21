@@ -1,0 +1,270 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.5;
+    color: #333;
+    background-color: #E6E6FA; /* Light purple-gray background */
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 25%;
+    background-color: #4B0082; /* Dark purple */
+    color: white;
+    padding: 15px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar-content {
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+.sidebar-image {
+    display: block;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid white;
+    margin: 0 auto 15px;
+}
+
+.nav-links {
+    margin-bottom: 20px;
+}
+
+.nav-links a {
+    display: block;
+    color: #E6E6FA;
+    text-decoration: none;
+    margin: 8px 0;
+    font-size: 0.95em;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    color: #DDA0DD;
+    font-style: italic;
+}
+
+.sidebar h3 {
+    font-size: 1.1em;
+    color: #BA55D3; /* Medium purple */
+    margin: 15px 0 8px;
+    border-bottom: 3px solid #BA55D3;
+    padding-bottom: 4px;
+    text-transform: uppercase;
+}
+
+.sidebar p {
+    margin: 4px 0;
+    font-size: 0.9em; /* Decreased from 1.4em by 0.5em */
+}
+
+.contact-label {
+    font-style: italic;
+}
+
+.sidebar ul {
+    list-style-type: disc;
+    margin-left: 18px;
+}
+
+.sidebar ul li {
+    margin: 4px 0;
+    font-size: 0.9em;
+}
+
+/* Main Content */
+.main-content {
+    width: 75%;
+    padding: 20px;
+    background-color: white;
+}
+
+/* Spacer to move content down */
+.main-content::before {
+    content: '';
+    display: block;
+    height: 50px;
+}
+
+.main-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8em;
+    color: #4B0082; /* Dark purple */
+    text-align: center;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.main-subtitle {
+    font-family: 'Open Sans', sans-serif;
+    font-style: italic;
+    font-size: 1.2em;
+    color: #666;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.main-content h2 {
+    font-size: 1.4em;
+    color: #4B0082; /* Dark purple */
+    border-bottom: 3px solid #BA55D3;
+    padding-bottom: 4px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.entry {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.dot {
+    width: 14px;
+    height: 14px;
+    background-color: #BA55D3;
+    border-radius: 50%;
+    border: 2px solid #4B0082;
+}
+
+.line {
+    width: 2px;
+    background-color: #4B0082;
+    flex-grow: 1;
+}
+
+.entry:last-child .line {
+    display: none;
+}
+
+.entry-content {
+    flex-grow: 1;
+}
+
+.entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.entry h3 {
+    font-size: 1.1em;
+    color: #333;
+}
+
+.logo {
+    width: 4px;
+    height: 4px;
+}
+
+.entry p {
+    font-style: italic;
+    color: #666;
+    margin: 4px 0;
+    font-size: 0.9em;
+}
+
+.main-content ul {
+    list-style-type: disc;
+    margin-left: 18px;
+}
+
+.main-content ul li {
+    margin: 4px 0;
+    font-size: 0.9em;
+}
+
+/* Footer */
+footer {
+    background-color: #4B0082;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+footer p {
+    margin: 4px 0;
+    font-size: 0.9em;
+}
+
+footer a {
+    color: #E6E6FA;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #DDA0DD;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+    }
+
+    .main-content {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .sidebar-image {
+        width: 120px;
+        height: 120px;
+    }
+
+    .nav-links a {
+        font-size: 0.8em;
+    }
+
+    .sidebar p {
+        font-size: 0.8em;
+    }
+
+    .main-title {
+        font-size: 1.5em;
+    }
+
+    .main-subtitle {
+        font-size: 1em;
+    }
+
+    .main-content h2 {
+        font-size: 1.2em;
+    }
+
+    .entry h3 {
+        font-size: 1em;
+    }
+
+    .main-content::before {
+        height: 30px;
+    }
+}
