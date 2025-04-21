@@ -16,7 +16,7 @@
             background-color: #E6E6FA;
             padding: 20px;
             text-align: center;
-            position: relative; /* For positioning exit button */
+            position: relative;
         }
 
         .objective-container h2 {
@@ -66,12 +66,12 @@
         }
 
         .exit-button-container:hover .exit-button {
-            opacity: 0; /* Hide BTR001.png on hover */
+            opacity: 0;
         }
 
         .exit-button-container:hover .exit-button-hover {
-            opacity: 1; /* Show BB00.png on hover */
-            transform: scale(1.005); /* 0.5% size increase */
+            opacity: 1;
+            transform: scale(1.005);
         }
 
         .exit-video {
@@ -81,7 +81,7 @@
             width: 120px;
             height: 120px;
             display: none;
-            mix-blend-mode: screen; /* Fallback to reduce green visibility */
+            mix-blend-mode: screen;
         }
     </style>
 </head>
@@ -91,7 +91,7 @@
             <img src="BTR001.png" alt="Exit Button" class="exit-button" id="exitButton" role="button" aria-label="Exit to resume">
             <img src="BB00.png" alt="Exit Button Hover" class="exit-button-hover" id="exitButtonHover" role="button" aria-label="Exit to resume">
         </div>
-        <video class="exit-video" id="exitVideo" muted preload="auto">
+        <video class="exit-video" id="exitVideo" muted preload="auto" playsinline>
             <source src="RBEE.mp4" type="video/mp4"> <!-- Update to RBEE.webm if preprocessed -->
         </video>
         <h2>Objective</h2>
@@ -103,7 +103,6 @@
         const exitButtonHover = document.getElementById('exitButtonHover');
         const exitVideo = document.getElementById('exitVideo');
 
-        // Check if video can load
         exitVideo.addEventListener('loadedmetadata', () => {
             console.log('Video metadata loaded successfully. Duration:', exitVideo.duration);
         });
@@ -113,23 +112,22 @@
             exitButton.style.display = 'none';
             exitButtonHover.style.display = 'none';
             exitVideo.style.display = 'block';
-            exitVideo.currentTime = 0; // Start at 0 seconds
+            exitVideo.currentTime = 0;
             exitVideo.play().then(() => {
                 console.log('Video playing successfully');
             }).catch(error => {
                 console.error('Error playing video:', error.message);
                 console.error('Error details:', error);
-                // Fallback: redirect immediately if video fails
+                console.log('Video source:', exitVideo.currentSrc);
                 window.location.href = 'index.html';
             });
         });
 
         exitVideo.addEventListener('ended', () => {
             console.log('Video ended, redirecting to index.html');
-            window.location.href = 'index.html'; // Redirect when video ends
+            window.location.href = 'index.html';
         });
 
-        // Log video load errors
         exitVideo.addEventListener('error', () => {
             console.error('Error loading video:', exitVideo.error);
             console.error('Video source:', exitVideo.currentSrc);
