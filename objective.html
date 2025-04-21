@@ -13,15 +13,16 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #E6E6FA; /* Light purple-gray background */
+            background-color: #E6E6FA;
             padding: 20px;
             text-align: center;
+            position: relative; /* For positioning exit button */
         }
 
         .objective-container h2 {
             font-family: 'Montserrat', sans-serif;
             font-size: 1.8em;
-            color: #4B0082; /* Dark purple */
+            color: #4B0082;
             margin-bottom: 15px;
             text-transform: uppercase;
         }
@@ -34,28 +35,105 @@
             line-height: 1.5;
         }
 
-        .back-link {
-            margin-top: 20px;
-            font-size: 0.95em;
+        .exit-button-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 120px;
+            height: 120px;
         }
 
-        .back-link a {
-            color: #BA55D3; /* Medium purple */
-            text-decoration: none;
+        .exit-button {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 120px;
+            height: 120px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            opacity: 1;
         }
 
-        .back-link a:hover {
-            color: #DDA0DD; /* Lighter purple on hover */
+        .exit-button-hover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 120px;
+            height: 120px;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+        }
+
+        .exit-button-container:hover .exit-button {
+            opacity: 0; /* Hide BTR001.png on hover */
+        }
+
+        .exit-button-container:hover .exit-button-hover {
+            opacity: 1; /* Show BB00.png on hover */
+            transform: scale(1.005); /* 0.5% size increase */
+        }
+
+        .exit-video {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 120px;
+            height: 120px;
+            display: none;
+            mix-blend-mode: screen; /* Fallback to reduce green visibility */
         }
     </style>
 </head>
 <body>
     <div class="objective-container">
+        <div class="exit-button-container">
+            <img src="BTR001.png" alt="Exit Button" class="exit-button" id="exitButton" role="button" aria-label="Exit to resume">
+            <img src="BB00.png" alt="Exit Button Hover" class="exit-button-hover" id="exitButtonHover" role="button" aria-label="Exit to resume">
+        </div>
+        <video class="exit-video" id="exitVideo" muted preload="auto">
+            <source src="RBEE.mp4" type="video/mp4"> <!-- Update to RBEE.webm if preprocessed -->
+        </video>
         <h2>Objective</h2>
         <p>Dedicated and customer-focused professional with a strong background in retail and facility maintenance, seeking a Store Associate position at CVS to leverage exceptional interpersonal skills, organizational expertise, and a passion for delivering outstanding service in a fast-paced environment.</p>
-        <div class="back-link">
-            <a href="index.html">Back to Resume</a>
-        </div>
     </div>
+
+    <script>
+        const exitButton = document.getElementById('exitButton');
+        const exitButtonHover = document.getElementById('exitButtonHover');
+        const exitVideo = document.getElementById('exitVideo');
+
+        // Check if video can load
+        exitVideo.addEventListener('loadedmetadata', () => {
+            console.log('Video metadata loaded successfully. Duration:', exitVideo.duration);
+        });
+
+        exitButtonHover.addEventListener('click', () => {
+            console.log('BB00.png clicked, attempting to play RBEE.mp4');
+            exitButton.style.display = 'none';
+            exitButtonHover.style.display = 'none';
+            exitVideo.style.display = 'block';
+            exitVideo.currentTime = 0; // Start at 0 seconds
+            exitVideo.play().then(() => {
+                console.log('Video playing successfully');
+            }).catch(error => {
+                console.error('Error playing video:', error.message);
+                console.error('Error details:', error);
+                // Fallback: redirect immediately if video fails
+                window.location.href = 'index.html';
+            });
+        });
+
+        exitVideo.addEventListener('ended', () => {
+            console.log('Video ended, redirecting to index.html');
+            window.location.href = 'index.html'; // Redirect when video ends
+        });
+
+        // Log video load errors
+        exitVideo.addEventListener('error', () => {
+            console.error('Error loading video:', exitVideo.error);
+            console.error('Video source:', exitVideo.currentSrc);
+        });
+    </script>
 </body>
 </html>

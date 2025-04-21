@@ -4,24 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Character Traits - Nathaniel Davis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 0;
             background-color: #E6E6FA;
-            font-family: sans-serif;
+            font-family: 'Open Sans', sans-serif;
             color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             text-align: center;
+            position: relative; /* For positioning exit button */
         }
 
         h2 {
+            font-family: 'Montserrat', sans-serif;
             font-size: 1.8em;
             color: #4B0082;
             margin-bottom: 15px;
+            text-transform: uppercase;
         }
 
         ul {
@@ -36,18 +40,65 @@
             margin: 4px 0;
         }
 
-        a {
-            color: #BA55D3;
-            text-decoration: none;
+        .exit-button-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 120px;
+            height: 120px;
         }
 
-        a:hover {
-            color: #DDA0DD;
+        .exit-button {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 120px;
+            height: 120px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            opacity: 1;
+        }
+
+        .exit-button-hover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 120px;
+            height: 120px;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+        }
+
+        .exit-button-container:hover .exit-button {
+            opacity: 0; /* Hide BTR001.png on hover */
+        }
+
+        .exit-button-container:hover .exit-button-hover {
+            opacity: 1; /* Show BB00.png on hover */
+            transform: scale(1.005); /* 0.5% size increase */
+        }
+
+        .exit-video {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 120px;
+            height: 120px;
+            display: none;
+            mix-blend-mode: screen; /* Fallback to reduce green visibility */
         }
     </style>
 </head>
 <body>
     <div>
+        <div class="exit-button-container">
+            <img src="BTR001.png" alt="Exit Button" class="exit-button" id="exitButton" role="button" aria-label="Exit to resume">
+            <img src="BB00.png" alt="Exit Button Hover" class="exit-button-hover" id="exitButtonHover" role="button" aria-label="Exit to resume">
+        </div>
+        <video class="exit-video" id="exitVideo" muted preload="auto">
+            <source src="RBEE.mp4" type="video/mp4"> <!-- Update to RBEE.webm if preprocessed -->
+        </video>
         <h2>Character Traits</h2>
         <ul>
             <li><strong>Reliable:</strong> Consistently meets deadlines and exceeds expectations, ensuring operational efficiency.</li>
@@ -60,9 +111,44 @@
             <li><strong>Adaptable:</strong> Quickly adjusts to new tasks, schedules, or challenges with a positive attitude.</li>
             <li><strong>Trustworthy:</strong> Handles responsibilities with integrity, earning confidence from supervisors and peers.</li>
         </ul>
-        <div>
-            <a href="index.html">Back to Resume</a>
-        </div>
     </div>
+
+    <script>
+        const exitButton = document.getElementById('exitButton');
+        const exitButtonHover = document.getElementById('exitButtonHover');
+        const exitVideo = document.getElementById('exitVideo');
+
+        // Check if video can load
+        exitVideo.addEventListener('loadedmetadata', () => {
+            console.log('Video metadata loaded successfully. Duration:', exitVideo.duration);
+        });
+
+        exitButtonHover.addEventListener('click', () => {
+            console.log('BB00.png clicked, attempting to play RBEE.mp4');
+            exitButton.style.display = 'none';
+            exitButtonHover.style.display = 'none';
+            exitVideo.style.display = 'block';
+            exitVideo.currentTime = 0; // Start at 0 seconds
+            exitVideo.play().then(() => {
+                console.log('Video playing successfully');
+            }).catch(error => {
+                console.error('Error playing video:', error.message);
+                console.error('Error details:', error);
+                // Fallback: redirect immediately if video fails
+                window.location.href = 'index.html';
+            });
+        });
+
+        exitVideo.addEventListener('ended', () => {
+            console.log('Video ended, redirecting to index.html');
+            window.location.href = 'index.html'; // Redirect when video ends
+        });
+
+        // Log video load errors
+        exitVideo.addEventListener('error', () => {
+            console.error('Error loading video:', exitVideo.error);
+            console.error('Video source:', exitVideo.currentSrc);
+        });
+    </script>
 </body>
 </html>
